@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useSnapshot } from 'valtio';
 import config from '../config/config';
@@ -10,55 +10,79 @@ import { fadeAnimation, slideAnimation } from '../config/motion';
 import { AIPicker, ColorPicker, CustomButton, FilePicker, Tab } from '../components';
 import Gradient_btn from '../components/Gradient_btn';
 
-
-
 const Customizer = () => {
   const snap = useSnapshot(state);
 
-  const [file, setFile] = useState('');//handle the file upload
-
-  const [prompt, setPrompt] = useState('');//for ai prompt
+  const [file, setFile] = useState('');
+  const [prompt, setPrompt] = useState('');
   const [generatingImg, setGeneratingImg] = useState(false);
-
   const [activeEditorTab, setActiveEditorTab] = useState("");
   const [activeFilterTab, setActiveFilterTab] = useState({
     logoShirt: true,
     stylishShirt: false,
-  })
+  });
+
+  const editorTabsContainerRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (editorTabsContainerRef.current && !editorTabsContainerRef.current.contains(event.target)) {
+        setActiveEditorTab("");
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   const generateTabContent = () => {
     switch (activeEditorTab) {
       case "colorpicker":
-        return <ColorPicker />
-
+        return <ColorPicker />;
       case "filepicker":
-        return <FilePicker
-          file={file}
-          setFile={setFile}
-          readFile={readFile}
-        />
-
+        return <FilePicker file={file} setFile={setFile} readFile={readFile} />;
       case "aipicker":
-        return <AIPicker />
-
+        return <AIPicker
+          prompt={prompt}
+          setPrompt={setPrompt}
+          generatingImg={generatingImg}
+          handleSubmit={handleSubmit}
+        />;
       default:
         return null;
     }
+  };
+
+
+  //ai submit
+  const handleSubmit = async (type) => {
+    if (!prompt) {
+      return alert("Please Enter a Prompt to continue");
+    }
+
+    try {
+      //call our backened to generate a ai image
+
+    } catch (error) {
+      alert(error);
+    } finally {
+      setGeneratingImg(false);
+      setActiveEditorTab("");
+
+
+    }
   }
-
-
-
-  //for reading the files
 
   const handleDecals = (type, result) => {
     const decalType = DecalTypes[type];
-
     state[decalType.stateProperty] = result;
 
     if (!activeFilterTab[decalType.filterTab]) {
-      handleActiveFilterTab(decalType.filterTab)
+      handleActiveFilterTab(decalType.filterTab);
     }
-  }
+  };
 
   const handleActiveFilterTab = (tabName) => {
     switch (tabName) {
@@ -74,26 +98,22 @@ const Customizer = () => {
         break;
     }
 
-     // after setting the state, activeFilterTab is updated
-
-    setActiveFilterTab((prevState) => {
-      return {
-        ...prevState,
-        [tabName]: !prevState[tabName]
-      }
-    })
-  }
-
- 
-
+    setActiveFilterTab((prevState) => ({
+      ...prevState,
+      [tabName]: !prevState[tabName],
+    }));
+  };
 
   const readFile = (type) => {
-    reader(file)
-      .then((result) => {
-        handleDecals(type, result);
-        setActiveEditorTab("");
-      })
-  }
+    reader(file).then((result) => {
+      handleDecals(type, result);
+      setActiveEditorTab("");
+    });
+  };
+
+  const handleTabClick = (tabName) => {
+    setActiveEditorTab((prevTab) => (prevTab === tabName ? "" : tabName));
+  };
 
   return (
     <AnimatePresence>
@@ -104,32 +124,29 @@ const Customizer = () => {
             className='top-0 left-0 z-10 absolute'
             {...slideAnimation('left')}
           >
-            <div className='flex items-center min-h-screen'>
+            <div className='flex items-center min-h-screen' ref={editorTabsContainerRef}>
               <div className='editortabs-container tabs'>
                 {EditorTabs.map((tab) => (
                   <Tab
                     key={tab.name}
                     tab={tab}
-                    handleClick={() => setActiveEditorTab(tab.name)}
+                    handleClick={() => handleTabClick(tab.name)}
                   />
                 ))}
                 {generateTabContent()}
               </div>
             </div>
           </motion.div>
-          {/* Go back button */}
           <motion.div
             className="absolute z-10 top-5 right-5"
             {...fadeAnimation}
           >
-
             <Gradient_btn
               label="Go Back"
               handleClick={() => state.intro = true}
-              customStyles="w-fit px-4 py-2.5 font-bold text-sm"
+              customStyles="w-fit px-4 mr-3 py-2.5 font-bold text-sm"
             />
           </motion.div>
-
           <motion.div
             className='filtertabs-container'
             {...slideAnimation("up")}
@@ -147,7 +164,7 @@ const Customizer = () => {
         </>
       )}
     </AnimatePresence>
-  )
-}
+  );
+};
 
-export default Customizer
+export default Customizer;

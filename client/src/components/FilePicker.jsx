@@ -1,6 +1,7 @@
 import React from 'react'
-
 import CustomButton from './CustomButton'
+import Gradient_btn from './Gradient_btn'
+
 
 const FilePicker = ({ file, setFile, readFile }) => {
   return (
@@ -13,7 +14,7 @@ const FilePicker = ({ file, setFile, readFile }) => {
           onChange={(e) => setFile(e.target.files[0])}
         />
         <label htmlFor="file-upload" className="filepicker-label">
-          Upload File
+          Upload Design
         </label>
 
         <p className="mt-2 text-gray-500 text-xs truncate">
@@ -21,16 +22,15 @@ const FilePicker = ({ file, setFile, readFile }) => {
         </p>
       </div>
 
-      <div className="mt-4 flex flex-wrap gap-3">
-        <CustomButton
-          type="outline"
-          title="Logo"
+      <div className="mt-4 flex gap-3">
+        <Gradient_btn
+          variant="outline"
+          label="Logo"
           handleClick={() => readFile('logo')}
-          customStyles="text-xs"
+          customStyles="text-xs white"
         />
-        <CustomButton
-          type="filled"
-          title="Full"
+        <Gradient_btn
+          label="Full"
           handleClick={() => readFile('full')}
           customStyles="text-xs"
         />
