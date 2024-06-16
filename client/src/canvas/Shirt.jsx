@@ -3,7 +3,6 @@ import { easing } from 'maath';
 import { useSnapshot } from 'valtio';
 import { useFrame, useThree } from '@react-three/fiber';
 import { Decal, useGLTF, useTexture } from '@react-three/drei';
-
 import state from '../store';
 
 const Shirt = () => {
@@ -20,7 +19,7 @@ const Shirt = () => {
   fullTexture.anisotropy = maxAnisotropy;
 
   useFrame((state, delta) => {
-    easing.dampC(materials.lambert1.color, snap.color1, 0.25, delta);
+    easing.dampC(materials.lambert1.color, snap.color, 0.25, delta);
   });
 
   const stateString = JSON.stringify(snap);
