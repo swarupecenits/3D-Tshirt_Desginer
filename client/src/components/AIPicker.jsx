@@ -1,6 +1,6 @@
 import React from 'react'
-
 import CustomButton from './CustomButton';
+import Gradient_btn from './Gradient_btn';
 
 const AIPicker = ({ prompt, setPrompt, generatingImg, handleSubmit }) => {
   return (
@@ -14,23 +14,23 @@ const AIPicker = ({ prompt, setPrompt, generatingImg, handleSubmit }) => {
       />
       <div className="flex flex-wrap gap-3">
         {generatingImg ? (
-          <CustomButton 
-            type="outline"
-            title="Asking AI..."
+          <Gradient_btn 
+            variant="outline"
+            label="Asking AI..."
             customStyles="text-xs"
           />
         ) : (
           <>
-            <CustomButton 
-              type="outline"
-              title="AI Logo"
+            <Gradient_btn 
+              variant="outline"
+              label="AI Logo"
               handleClick={() => handleSubmit('logo')}
               customStyles="text-xs"
             />
 
-            <CustomButton 
-              type="filled"
-              title="AI Full"
+            <Gradient_btn 
+              variant="filled"
+              label="AI Full"
               handleClick={() => handleSubmit('full')}
               customStyles="text-xs"
             />
