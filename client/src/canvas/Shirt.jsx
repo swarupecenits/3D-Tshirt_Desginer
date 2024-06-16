@@ -13,10 +13,6 @@ const Shirt = () => {
   const logoTexture = useTexture(snap.logoDecal);
   const fullTexture = useTexture(snap.fullDecal);
 
-  // Get maximum anisotropy from the WebGL context
-  const maxAnisotropy = gl.capabilities.getMaxAnisotropy();
-  logoTexture.anisotropy = maxAnisotropy;
-  fullTexture.anisotropy = maxAnisotropy;
 
   useFrame((state, delta) => {
     easing.dampC(materials.lambert1.color, snap.color, 0.25, delta);
@@ -50,6 +46,7 @@ const Shirt = () => {
             map={logoTexture}
             depthTest={false}
             depthWrite={true}
+            mapAnisotropy={16}
           />
         )}
       </mesh>
