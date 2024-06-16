@@ -1,5 +1,5 @@
 ![image](https://github.com/swarupecenits/3D-Tshirt_Desginer/assets/119785118/93e21224-377e-498a-aa32-a3bd0853f73e)
-3D Swag Customization App
+3D-Tshirt_Desginer App
 
 Build this project step-by-step with our detailed tutorial on the JavaScript Mastery YouTube channel. Join the JSM family!
 
@@ -38,7 +38,7 @@ If you're getting started and need assistance or face any bugs, join our active 
 
 🔋 Features
 
-    3D Swag Generation: Generate unique 3D shirts/swag items dynamically.
+    3D-Tshirt_Desginer App: Generate unique 3D shirts/swag items dynamically.
     Color Customization: Apply any color to the 3D shirt/swag for personalized styling.
     Logo Upload Functionality: Enable users to upload any file as a logo, integrating it seamlessly onto the 3D shirt.
     Texture Image Upload: Allow users to upload texture images to style the 3D shirt/swag.
@@ -89,7 +89,7 @@ Set Up Environment Variables
 
 Create a new file named .env in the root of your project and add the following content:
 
-env
+.env
 
 OPENAI_API_KEY=your_openai_api_key_here
 
@@ -112,6 +112,9 @@ npm run dev
 
 Open http://localhost:5173 in your browser to view the project.
 
+🔗 Links
+
+   Porfolio Website: https://swarup-chanda.vercel.app/
 
 🚀 More
 
