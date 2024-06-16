@@ -1,4 +1,5 @@
 import CustomButton from "./CustomButton";
+import Gradient_btn from "./Gradient_btn";
 import FancyButton from "./Fancy_button";
 import AIPicker from "./AIPicker";
 import ColorPicker from "./ColorPicker";
@@ -12,4 +13,5 @@ export {
   FilePicker,
   Tab,
   FancyButton,
+  Gradient_btn,
 };
